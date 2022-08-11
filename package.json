@@ -1,0 +1,13 @@
+{
+  "name": "apispreadsheets",
+  "version": "1.0.1",
+  "description": "Package to interact with the api on www.apispreadsheets.com",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["apispreadsheets", "spreadsheet upload", "google sheet api", "spreadsheet api", "csv import", "spreadsheet as database"],
+  "author": "API Spreadsheets <info@apispreadsheets.com>",
+  "license": "ISC"
+}
