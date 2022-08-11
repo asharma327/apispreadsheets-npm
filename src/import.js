@@ -8,21 +8,21 @@ class APISpreadsheetsImporter {
         this.addCSS()
     }
 
-    importFiles = () => {
+    importFiles(){
         if (!this.modalOpen){
             this.initImporter()
             this.openModal()
         }
     }
 
-    initImporter = () => {
+    initImporter(){
         this.listenToIframeMessages()
         const iFrameElem = this.createIFrame()
 
         this.attachModalToDOM(iFrameElem)
     }
 
-    listenToIframeMessages = () => {
+    listenToIframeMessages(){
         window.addEventListener("message", (e) => {
             try{
                 if ("success" in e.data && "fileInfo" in e.data){
@@ -41,7 +41,7 @@ class APISpreadsheetsImporter {
         }, false)
     }
 
-    createIFrame = () => {
+    createIFrame(){
         const iFrameElem = document.createElement("iframe");
         // iFrameElem.setAttribute("src", "http://localhost:5000/import/embed/" + this.key)
         // const baseURL = window.location.href.includes("apispreadsheets.com") ? "https://www.apispreadsheets.com/" : "http://localhost:5000/"
@@ -56,13 +56,13 @@ class APISpreadsheetsImporter {
         return iFrameElem
     }
 
-    attachModalToDOM = (iFrameElem) => {
+    attachModalToDOM(iFrameElem){
         const modalElement = this.createModalElement(iFrameElem)
 
         document.body.appendChild(modalElement);
     }
 
-    addCSS = () => {
+    addCSS(){
         const styleElm = document.createElement("style");
         styleElm.type="text/css";
 
@@ -123,7 +123,7 @@ class APISpreadsheetsImporter {
 
     }
 
-    createModalElement = (iFrameElem) => {
+    createModalElement(iFrameElem){
         const modalOuterStyle = "display:none;position:fixed;z-index:2147483647;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgba(0,0,0,0.4);";
         const modalInnerStyle = "position:relative;background-color:#fefefe;top:8%;margin:auto;padding:0;border-radius:10px;width:80%;box-shadow:0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);animation-name:animatetop;animation-duration:0.4s;margin-bottom:50px;opacity:1;"
         const modalBodyStyle = "padding:15px 16px;"
@@ -150,7 +150,7 @@ class APISpreadsheetsImporter {
         return modalElement
     }
 
-    getHeaderElement = () => {
+    getHeaderElement(){
         const closeElement = this.getCloseElement()
 
         const headerElement = document.createElement("div");
@@ -162,7 +162,7 @@ class APISpreadsheetsImporter {
         return headerElement
     }
 
-    getCloseElement = () => {
+    getCloseElement(){
         const closeElm = document.createElement("div")
         closeElm.classList.add("closeAPISpreadsheetsIcon")
         // closeElm.onclick = function () {
@@ -173,14 +173,14 @@ class APISpreadsheetsImporter {
         return closeElm
     }
 
-    openModal = () => {
+    openModal(){
         if (!this.modalOpen){
             const modal = document.getElementById("apiSpreadsheetsImportModal");
             modal.style.display = 'block';
         }
     }
 
-    closeImporter = () => {
+    closeImporter(){
         const modal = document.getElementById("apiSpreadsheetsImportModal");
         modal.style.display = 'none';
     }

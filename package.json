@@ -1,13 +1,25 @@
 {
   "name": "apispreadsheets",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Package to interact with the api on www.apispreadsheets.com",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d dist"
   },
-  "keywords": ["apispreadsheets", "spreadsheet upload", "google sheet api", "spreadsheet api", "csv import", "spreadsheet as database"],
+  "keywords": [
+    "apispreadsheets",
+    "spreadsheet upload",
+    "google sheet api",
+    "spreadsheet api",
+    "csv import",
+    "spreadsheet as database"
+  ],
   "author": "API Spreadsheets <info@apispreadsheets.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1"
+  }
 }

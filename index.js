@@ -1,5 +1,1 @@
-import APISpreadsheetsImporter from "./import"
-
-export {
-    APISpreadsheetsImporter
-}
+module.exports = require("./dist")
