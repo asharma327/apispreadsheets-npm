@@ -1,7 +1,8 @@
 class APISpreadsheetsImporter {
-    constructor(key,callback,matchCallback=null){
+    constructor(key,callback,matchCallback=null,editCallback=null){
         this.key = key;
         this.callback = callback;
+        this.editCallback = editCallback;
         this.matchCallback = matchCallback;
         this.modalOpen = false;
 
@@ -11,22 +12,28 @@ class APISpreadsheetsImporter {
     importFiles(){
         if (!this.modalOpen){
             this.initImporter()
-            this.openModal()
+            this.openModal("apiSpreadsheetsImportModal")
         }
     }
 
     initImporter(){
         this.listenToIframeMessages()
-        const iFrameElem = this.createIFrame()
+        const iFrameElem = this.createIFrame("")
 
-        this.attachModalToDOM(iFrameElem)
+        this.attachModalToDOM(iFrameElem, "apiSpreadsheetsImportModal")
     }
 
     listenToIframeMessages(){
         window.addEventListener("message", (e) => {
             try{
-                if ("success" in e.data && "fileInfo" in e.data){
+                if ("success" in e.data && "fileInfo" in e.data && !("editFileID" in e.data)){
                     this.callback(e.data.success, e.data.fileInfo)
+                }
+
+                if ("success" in e.data && "fileInfo" in e.data && "editFileID" in e.data){
+                    if (this.editCallback !== null){
+                        this.editCallback(e.data.success, e.data.fileInfo, e.data.editFileID)
+                    }
                 }
 
                 if ("match" in e.data){
@@ -41,23 +48,22 @@ class APISpreadsheetsImporter {
         }, false)
     }
 
-    createIFrame(){
+    createIFrame(iframeType){
         const iFrameElem = document.createElement("iframe");
-        // iFrameElem.setAttribute("src", "http://localhost:5000/import/embed/" + this.key)
-        // const baseURL = window.location.href.includes("apispreadsheets.com") ? "https://www.apispreadsheets.com/" : "http://localhost:5000/"
-        const baseURL = "https://www.apispreadsheets.com/"
-        // const baseURL = "http://localhost:5000/"
-        // console.log(window.location.href)
-        // console.log(baseURL + "import/embed/" + this.key)
-        iFrameElem.setAttribute("src", baseURL + "import/embed/" + this.key)
+        let baseURL = "https://www.apispreadsheets.com/"
+        // let baseURL = "http://localhost:5000/"
+
+        baseURL += "import/embed/" + this.key + iframeType
+
+        iFrameElem.setAttribute("src", baseURL)
         iFrameElem.frameBorder = '0';
         iFrameElem.classList.add("apiSpreadsheetsIframe");
 
         return iFrameElem
     }
 
-    attachModalToDOM(iFrameElem){
-        const modalElement = this.createModalElement(iFrameElem)
+    attachModalToDOM(iFrameElem, id){
+        const modalElement = this.createModalElement(iFrameElem, id)
 
         document.body.appendChild(modalElement);
     }
@@ -123,7 +129,7 @@ class APISpreadsheetsImporter {
 
     }
 
-    createModalElement(iFrameElem){
+    createModalElement(iFrameElem, id){
         const modalOuterStyle = "display:none;position:fixed;z-index:2147483647;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgba(0,0,0,0.4);";
         const modalInnerStyle = "position:relative;background-color:#fefefe;top:8%;margin:auto;padding:0;border-radius:10px;width:80%;box-shadow:0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);animation-name:animatetop;animation-duration:0.4s;margin-bottom:50px;opacity:1;"
         const modalBodyStyle = "padding:15px 16px;"
@@ -145,7 +151,7 @@ class APISpreadsheetsImporter {
         modalInnerElement.appendChild(modalBodyElement)
         modalElement.appendChild(modalInnerElement)
 
-        modalElement.setAttribute('id', 'apiSpreadsheetsImportModal')
+        modalElement.setAttribute('id', id)
 
         return modalElement
     }
@@ -173,16 +179,31 @@ class APISpreadsheetsImporter {
         return closeElm
     }
 
-    openModal(){
+    openModal(id){
         if (!this.modalOpen){
-            const modal = document.getElementById("apiSpreadsheetsImportModal");
+            const modal = document.getElementById(id);
             modal.style.display = 'block';
         }
     }
 
     closeImporter(){
         const modal = document.getElementById("apiSpreadsheetsImportModal");
+        const modal2 = document.getElementById("apiSpreadsheetsEditModal")
         modal.style.display = 'none';
+        modal2.style.display = 'none';
+        modal2.parentElement.removeChild(modal2)
+    }
+
+    editFile(fileID){
+        this.initEditFile(fileID);
+        this.openModal("apiSpreadsheetsEditModal");
+    }
+
+    initEditFile(fileID){
+        this.listenToIframeMessages();
+        const iFrameElem = this.createIFrame("/edit/" + fileID);
+
+        this.attachModalToDOM(iFrameElem, "apiSpreadsheetsEditModal");
     }
 
 }

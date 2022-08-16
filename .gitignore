@@ -23,4 +23,7 @@ yarn-error.log*
 *.xlsx
 *.csv
 
+*.rdb
+
 package-lock.json
+requirements.txt

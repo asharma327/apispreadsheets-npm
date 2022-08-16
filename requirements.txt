@@ -1,0 +1,4 @@
+3 steps to build
+1. npm run build
+2. npm login (optional)
+3. npm publish
