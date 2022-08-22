@@ -212,11 +212,16 @@ var APISpreadsheetsImporter = function () {
     }, {
         key: "closeImporter",
         value: function closeImporter() {
-            var modal = document.getElementById("apiSpreadsheetsImportModal");
-            var modal2 = document.getElementById("apiSpreadsheetsEditModal");
-            modal.style.display = 'none';
-            modal2.style.display = 'none';
-            modal2.parentElement.removeChild(modal2);
+            try {
+                var modal = document.getElementById("apiSpreadsheetsImportModal");
+                modal.style.display = 'none';
+            } catch (e) {}
+
+            try {
+                var modal2 = document.getElementById("apiSpreadsheetsEditModal");
+                modal2.style.display = 'none';
+                modal2.parentElement.removeChild(modal2);
+            } catch (e) {}
         }
     }, {
         key: "editFile",

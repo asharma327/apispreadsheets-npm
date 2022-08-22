@@ -187,11 +187,16 @@ class APISpreadsheetsImporter {
     }
 
     closeImporter(){
-        const modal = document.getElementById("apiSpreadsheetsImportModal");
-        const modal2 = document.getElementById("apiSpreadsheetsEditModal")
-        modal.style.display = 'none';
-        modal2.style.display = 'none';
-        modal2.parentElement.removeChild(modal2)
+        try {
+            const modal = document.getElementById("apiSpreadsheetsImportModal");
+            modal.style.display = 'none';
+        } catch (e) { }
+
+        try {
+            const modal2 = document.getElementById("apiSpreadsheetsEditModal")
+            modal2.style.display = 'none';
+            modal2.parentElement.removeChild(modal2)
+        } catch (e) { }
     }
 
     editFile(fileID){
