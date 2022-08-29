@@ -1,6 +1,6 @@
 {
   "name": "apispreadsheets",
-  "version": "3.0.1",
+  "version": "3.0.3",
   "description": "Package to interact with the API and Importer on www.apispreadsheets.com",
   "main": "index.js",
   "type": "module",

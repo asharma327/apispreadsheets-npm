@@ -69,10 +69,7 @@ var APISpreadsheetsImporter = function () {
         key: "createIFrame",
         value: function createIFrame(iframeType) {
             var iFrameElem = document.createElement("iframe");
-            var baseURL = "https://www.apispreadsheets.com/";
-            // let baseURL = "http://localhost:5000/"
-
-            baseURL += "import/embed/" + this.key + iframeType;
+            var baseURL = this.getIFrameURL(iframeType);
 
             iFrameElem.setAttribute("src", baseURL);
             iFrameElem.frameBorder = '0';
@@ -236,6 +233,23 @@ var APISpreadsheetsImporter = function () {
             var iFrameElem = this.createIFrame("/edit/" + fileID);
 
             this.attachModalToDOM(iFrameElem, "apiSpreadsheetsEditModal");
+        }
+    }, {
+        key: "getIFrameURL",
+        value: function getIFrameURL(endURL) {
+            var baseURL = "https://www.apispreadsheets.com/";
+            // let baseURL = "http://localhost:5000/"
+
+            baseURL += "import/embed/" + this.key + endURL;
+
+            return baseURL;
+        }
+    }, {
+        key: "insertImporter",
+        value: function insertImporter() {
+            this.listenToIframeMessages();
+
+            return this.getIFrameURL("");
         }
     }]);
 

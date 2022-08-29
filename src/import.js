@@ -50,10 +50,7 @@ class APISpreadsheetsImporter {
 
     createIFrame(iframeType){
         const iFrameElem = document.createElement("iframe");
-        let baseURL = "https://www.apispreadsheets.com/"
-        // let baseURL = "http://localhost:5000/"
-
-        baseURL += "import/embed/" + this.key + iframeType
+        const baseURL = this.getIFrameURL(iframeType)
 
         iFrameElem.setAttribute("src", baseURL)
         iFrameElem.frameBorder = '0';
@@ -211,6 +208,20 @@ class APISpreadsheetsImporter {
         this.attachModalToDOM(iFrameElem, "apiSpreadsheetsEditModal");
     }
 
+    getIFrameURL(endURL){
+        let baseURL = "https://www.apispreadsheets.com/"
+        // let baseURL = "http://localhost:5000/"
+
+        baseURL += "import/embed/" + this.key + endURL
+
+        return baseURL
+    }
+
+    insertImporter(){
+        this.listenToIframeMessages();
+
+        return this.getIFrameURL("")
+    }
 }
 
 export default APISpreadsheetsImporter
