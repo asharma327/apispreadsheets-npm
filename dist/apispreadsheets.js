@@ -31,12 +31,16 @@ var APIError = function (_Error) {
 var APISpreadsheets = function () {
     function APISpreadsheets() {
         var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-            baseUrl = _ref.baseUrl,
             accessKey = _ref.accessKey,
             secretKey = _ref.secretKey,
-            bearerToken = _ref.bearerToken,
-            defaultHeaders = _ref.defaultHeaders,
-            timeout = _ref.timeout;
+            _ref$baseUrl = _ref.baseUrl,
+            baseUrl = _ref$baseUrl === undefined ? "https://api.apispreadsheets.com" : _ref$baseUrl,
+            _ref$bearerToken = _ref.bearerToken,
+            bearerToken = _ref$bearerToken === undefined ? null : _ref$bearerToken,
+            _ref$defaultHeaders = _ref.defaultHeaders,
+            defaultHeaders = _ref$defaultHeaders === undefined ? null : _ref$defaultHeaders,
+            _ref$timeout = _ref.timeout,
+            timeout = _ref$timeout === undefined ? 45 : _ref$timeout;
 
         _classCallCheck(this, APISpreadsheets);
 
@@ -186,12 +190,13 @@ var APISpreadsheets = function () {
         key: 'ai',
         value: async function ai(_ref5) {
             var file_id = _ref5.file_id,
+                prompt = _ref5.prompt,
+                accessKey = _ref5.accessKey,
+                secretKey = _ref5.secretKey,
                 _ref5$method = _ref5.method,
                 method = _ref5$method === undefined ? 'post' : _ref5$method,
-                prompt = _ref5.prompt,
-                body = _ref5.body,
-                accessKey = _ref5.accessKey,
-                secretKey = _ref5.secretKey;
+                _ref5$body = _ref5.body,
+                body = _ref5$body === undefined ? null : _ref5$body;
 
             if (!file_id) throw new APIError('Missing required path param: file_id');
 
